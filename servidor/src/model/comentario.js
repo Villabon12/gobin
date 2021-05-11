@@ -5,15 +5,15 @@ async function listarComment(){
 }
 
 async function insertarComment(newComment){
-    await pool.query('insert into comentario ser ?', [newComment]);
+    return await pool.query('insert into comentario ser ?', [newComment]);
 }
 
 async function actualizarComment(id, actualizarComment){
-    await pool.query('update comentario set ? where id=?', [actualizarComment, id]);
+    return await pool.query('update comentario set ? where id=?', [actualizarComment, id]);
 }
 
 async function eliminarComment(id){
-    await pool.query('delete from comentario where id=?', [id]);
+    return await pool.query('delete from comentario where id=?', [id]);
 }
 
 module.exports={

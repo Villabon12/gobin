@@ -5,15 +5,15 @@ async function listarCart(){
 }
 
 async function insertarCart(newCart){
-    await pool.query('insert into usuario ser ?', [newCart]);
+    return await pool.query('insert into usuario set ?', [newCart]);
 }
 
 async function actualizarCart(id, actualizarCart){
-    await pool.query('update carrito set ? where id=?', [actualizarCart, id]);
+    return await pool.query('update carrito set ? where id=?', [actualizarCart, id]);
 }
 
 async function eliminarCart(id){
-    await pool.query('delete from carrito where id=?', [id]);
+    return await pool.query('delete from carrito where id=?', [id]);
 }
 
 module.exports={

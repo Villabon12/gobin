@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const exphbs = require('express-handlebars');
 const path = require('path');
+const cors = require('cors');
 
 // inicio
 const app = express();
@@ -23,6 +24,7 @@ app.set('view engine', '.hbs');
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cors());
 
 // variables globales
 app.use((req, res, next) => {
@@ -32,14 +34,15 @@ app.use((req, res, next) => {
 
 // rutas
 app.use(require('./routes'));
-app.use('', require('./routes/index'));
-app.use('/login', require('./routes/login'));
-app.use('/admin', require('./routes/admin'));
-app.use('/user', require('./routes/user'));
+app.use('/login', require('./routes/api/login'));
+app.use('/producto', require('./routes/api/producto'));
+app.use('/blog', require('./routes/api/blog'));
+app.use('/cart', require('./routes/api/carrito'));
 
 
 // public
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 // inicia el server
 app.listen(app.get('port'), () => {

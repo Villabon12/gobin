@@ -1,41 +1,30 @@
 const express = require('express');
+
+const productoController = require('../controller/productoController')
+
 const router = express.Router();
-const comentarioController = require('../controller/comentarioController');
-const productoController = require('../controller/productoController');
-const publicacionController = require('../controller/publicacionContoller');
 
+// Rutas index
 
-router.get('/home', async (req, res)=>{
+router.get('/home', (req, res) => {
+    res.render('inicio/home')
+});
 
-    res.render('inicio/home');
-})
-
-router.get('/blog', async(req, res)=>{
+router.get('/blog', (req, res) =>{
     res.render('inicio/blog')
-})
+});
 
-router.get('/producto', async(req, res) => {
-    const prod =  await productoController.listProduct();
-    
-    res.render('inicio/producto', {prod});
-  
-  });
-
-router.get('/nosotros', async(req, res)=>{
-    res.render('inicio/nosotro')
-})
-
-router.get('/contactos', async(req, res)=>{
+router.get('/contactenos', (req, res) =>{
     res.render('inicio/contacteno')
-})
+});
 
-router.get('/login', async(req, res)=>{
-    res.render('login/login')
-})
+router.get('/nosotros', (req, res) =>{
+    res.render('inicio/nosotro')
+});
 
-router.get('/registro', async(req, res)=>{
-    res.render('login/register')
-})
-
+router.get('/productos', async(req, res) =>{
+    const listarProducto = await productoController.listProduct
+    res.render('inicio/producto', {listarProducto})
+});
 
 module.exports = router;
