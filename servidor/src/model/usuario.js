@@ -1,25 +1,15 @@
 const pool = require('../database');
 
-const authLoginM = async (email, contrasenia) => {
-  const exist = await pool.query(`SELECT COUNT(*) as exist 
-    FROM usuario 
-    WHERE
-        usuario.email = '${email}' 
-          AND usuario.contrasenia = '${contrasenia}'`);
-  if (exist == '1') {
-    const idUser = await pool.query(`SELECT usuario.id as idUser 
-      FROM usuario 
-      WHERE
-          usuario.email = '${email}' 
-            AND usuario.contrasenia = '${contrasenia}'`);
-    
-    return {
-      exist: exist,
-      userLogin: idUser
-    }
-  }else{
-  return { exist: exist, userLogin: `` };}
+const contar = async (email, contrasenia) => {
+  const exist = await pool.query(`SELECT COUNT(*) as iniciar FROM usuario WHERE email = '${email}' AND contrasenia = '${contrasenia}'`);
+  return exist[0].iniciar;
 }
+
+const usuario = async(email, contrasenia) =>{
+  const idUser = await pool.query(`SELECT id FROM usuario WHERE email = '${email}' and contrasenia = '${contrasenia}'`);
+  return idUser[0].id;
+}
+
 const authRegister = async (newUser) => {
   const user = await pool.query('INSERT INTO usuario SET ?', [newUser])
   console.log(`REGISTRO EXITOSO DE USUARIO`);
@@ -45,35 +35,10 @@ const deleteUser = async (id) => {
 }
 
 module.exports = {
+  usuario,
   cargarUser,
-  authLoginM,
+  contar,
   authRegister,
   updUser,
   deleteUser
 }
-
-/* const pool = require('../database');
-
-    async function listarUser(){
-        usua = await pool.query('select * from usuario');
-        return usua
-    }
-
-    async function insertarUser(newUser){
-        await pool.query('insert into usuario ser ?', [newUser]);
-    }
-
-    async function actualizarUser(id, actualizarUser){
-        await pool.query('update usuario set ? where id=?', [actualizarUser, id]);
-    }
-
-    async function eliminarUser(id){
-        await pool.query('delete from usuario where id=?', [id]);
-    }
-
-    module.exports = {
-        listarUser,
-        insertarUser,
-        actualizarUser,
-        eliminarUser
-    } */

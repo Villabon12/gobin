@@ -2,8 +2,24 @@
 const producto = require('../model/producto')
 
 async function listProduct(req, res){
-    await producto.listarProducto();
-    return res.status(200).json()
+    const dato = await producto.listarProducto();
+    return res.json(dato)
+}
+async function listProductC(req, res){
+    const dato = await producto.listarProductoC();
+    return res.json(dato)
+}
+async function listProductF(req, res){
+    const dato = await producto.listarProductoF();
+    return res.json(dato)
+}
+async function listProductB(req, res){
+    const dato = await producto.listarProductoB();
+    return res.json(dato)
+}
+async function listProductP(req, res){
+    const dato = await producto.listarProductoP();
+    return res.json(dato)
 }
 
 async function insertProduct(req){
@@ -38,6 +54,10 @@ async function deleteProduct(req){
 
 module.exports = {
     listProduct,
+    listProductC,
+    listProductF,
+    listProductB,
+    listProductP,
     insertProduct,
     updateProduct,
     deleteProduct

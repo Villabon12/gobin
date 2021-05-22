@@ -4,15 +4,20 @@ async function cargar(req, res){
   const data = await usuario.cargarUser();
   return res.json(data);
 }
+
 async function authLogin(req, res){
   const { email, contrasenia } = req.body;
-  const verificar = {email, contrasenia};
-  try {
-     await usuario.authLoginM(verificar)
-      .then((data) => res.json(data))
-      .catch((err) => console.error(err));
-  } catch (err) {
-    console.warn(err);
+  const contar = await usuario.contar(email, contrasenia );
+  if (contar === 1) {
+    const idUser = await usuario.usuario(email, contrasenia );
+    res.json({
+      idUsuario: idUser,
+      message: "Se ha iniciado sesion"
+    })
+  } else{
+    res.json({
+      message: "No existe"
+    })
   }
 }
 
